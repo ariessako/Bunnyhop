@@ -403,11 +403,7 @@
 	<script type="text/javascript">
 
 		
-		var web3 = window.web3;
-		// var web3 = new Web3();
-		web3.setProvider(new web3.providers.HttpProvider("http://localhost:7545"));	
-		
-		const contract = new web3.eth.contract([
+		var MyContract = web3.eth.contract([
 	{
 		"constant": false,
 		"inputs": [
@@ -451,117 +447,10 @@
 		"type": "function"
 	}
 ]);
-        contract.options = {
-                address: '0x2c78747d111585761D5169a279437be29033011a',
-                from: '0xA2493Ef1F688F32119a40981c69b25d56aAa2E2A',
-                gasPrice: '20000000000'
-        }
-		// const Web3 = require('web3');
-        // const web3 = new Web3("HTTP://127.0.0.1:7545");
-		// console.log(web3.currentProvider);
-// 		console.log(web3);
-// 		// console.log(web3.eth.contract);
-// 		const abi = [
-// 	{
-// 		"constant": false,
-// 		"inputs": [
-// 			{
-// 				"name": "_points",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"name": "addPoints",
-// 		"outputs": [],
-// 		"payable": false,
-// 		"stateMutability": "nonpayable",
-// 		"type": "function"
-// 	},
-// 	{
-// 		"constant": false,
-// 		"inputs": [
-// 			{
-// 				"name": "_points",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"name": "deductpoints",
-// 		"outputs": [],
-// 		"payable": false,
-// 		"stateMutability": "nonpayable",
-// 		"type": "function"
-// 	},
-// 	{
-// 		"constant": true,
-// 		"inputs": [],
-// 		"name": "getPoints",
-// 		"outputs": [
-// 			{
-// 				"name": "",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"payable": false,
-// 		"stateMutability": "view",
-// 		"type": "function"
-// 	}
-// ]
-// 		var sampleContract = web3.eth.contract(abi);
-// 		sampleContract.options = {
-//      from: '0xA2493Ef1F688F32119a40981c69b25d56aAa2E2A', 
-//      data: '6080604052600080556001805467ffffffffffffffff1916905534801561002557600080fd5b5060f3806100346000396000f30060806040526004361060525763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312fb1cbd811460575780631be6de1c14606e578063f4b7095b146083575b600080fd5b348015606257600080fd5b50606c60043560a7565b005b348015607957600080fd5b50606c60043560b2565b348015608e57600080fd5b50609560c1565b60408051918252519081900360200190f35b600080549091019055565b60008054919091036032019055565b600054905600a165627a7a723058200ba46829b38336b26531e84d7c09c5b3b5c47713221f3d43b02daec4b800628a0029', 
-//      gas: '4700000'
-//    }
-//    var sampleContractInstance = sampleContract.at("0x54b613207B462f0c5222314d656f994F6D8a3436");
-// var contract = new web3.eth.contract(
-// 	[
-// 	{
-// 		"constant": false,
-// 		"inputs": [
-// 			{
-// 				"name": "_points",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"name": "addPoints",
-// 		"outputs": [],
-// 		"payable": false,
-// 		"stateMutability": "nonpayable",
-// 		"type": "function"
-// 	},
-// 	{
-// 		"constant": false,
-// 		"inputs": [
-// 			{
-// 				"name": "_points",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"name": "deductpoints",
-// 		"outputs": [],
-// 		"payable": false,
-// 		"stateMutability": "nonpayable",
-// 		"type": "function"
-// 	},
-// 	{
-// 		"constant": true,
-// 		"inputs": [],
-// 		"name": "getPoints",
-// 		"outputs": [
-// 			{
-// 				"name": "",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"payable": false,
-// 		"stateMutability": "view",
-// 		"type": "function"
-// 	}
-// ],'0x54b613207B462f0c5222314d656f994F6D8a3436',
-//    {
-//      from: '0x54b613207B462f0c5222314d656f994F6D8a3436', 
-//      data: '6080604052600080556001805467ffffffffffffffff1916905534801561002557600080fd5b5060f3806100346000396000f30060806040526004361060525763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312fb1cbd811460575780631be6de1c14606e578063f4b7095b146083575b600080fd5b348015606257600080fd5b50606c60043560a7565b005b348015607957600080fd5b50606c60043560b2565b348015608e57600080fd5b50609560c1565b60408051918252519081900360200190f35b600080549091019055565b60008054919091036032019055565b600054905600a165627a7a723058200ba46829b38336b26531e84d7c09c5b3b5c47713221f3d43b02daec4b800628a0029', 
-//      gas: '4700000'
-//    })
+// instantiate by address
+var contractInstance = MyContract.at('0xe42d01b46af43214e15940070fb8a43f6e8f3d06');
+contractInstance.addPoints(10, (val) => {console.log(val)})
+
  console.log(contract);
    
         
@@ -572,6 +461,7 @@
     		contract.methods.addPoints(points).send({from: '0xA2493Ef1F688F32119a40981c69b25d56aAa2E2A'}).then(e => res.send('points added'));
 
 		}
+		var overall = contractInstance.getPoints((val)=>{console.log(val)});
 
 	</script>
 </body>
