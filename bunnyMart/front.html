@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!------ Include the above in your HEAD tag ---------->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bunny Mart</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+
+	<style type="text/css">
+		body {
+			background-image: url("Background/Background2.jpg");
+			font-family: "Open Sans", sans-serif;
+		}
+
+		h2 {
+			color: #000;
+			font-size: 26px;
+			font-weight: 300;
+			text-align: center;
+			text-transform: uppercase;
+			position: relative;
+			margin: 30px 0 80px;
+		}
+
+		h2 b {
+			color: #ffc000;
+		}
+
+		h2::after {
+			content: "";
+			width: 100px;
+			position: absolute;
+			margin: 0 auto;
+			height: 4px;
+			background: rgba(0, 0, 0, 0.2);
+			left: 0;
+			right: 0;
+			bottom: -20px;
+		}
+
+		.carousel {
+			margin: 50px auto;
+			padding: 0 70px;
+		}
+
+		.carousel .item {
+			min-height: 330px;
+			text-align: center;
+			overflow: hidden;
+		}
+
+		.carousel .item .img-box {
+			height: 160px;
+			width: 100%;
+			position: relative;
+		}
+
+		.carousel .item img {
+			max-width: 100%;
+			max-height: 100%;
+			display: inline-block;
+			position: absolute;
+			bottom: 0;
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+		}
+
+		.carousel .item h4 {
+			font-size: 18px;
+			margin: 10px 0;
+		}
+
+		.carousel .item .btn {
+			color: #333;
+			border-radius: 0;
+			font-size: 11px;
+			text-transform: uppercase;
+			font-weight: bold;
+			background: none;
+			border: 1px solid #ccc;
+			padding: 5px 10px;
+			margin-top: 5px;
+			line-height: 16px;
+		}
+
+		.carousel .item .btn:hover,
+		.carousel .item .btn:focus {
+			color: #fff;
+			background: #000;
+			border-color: #000;
+			box-shadow: none;
+		}
+
+		.carousel .item .btn i {
+			font-size: 14px;
+			font-weight: bold;
+			margin-left: 5px;
+		}
+
+		.carousel .thumb-wrapper {
+			text-align: center;
+		}
+
+		.carousel .thumb-content {
+			padding: 15px;
+		}
+
+		.carousel .carousel-control {
+			height: 100px;
+			width: 40px;
+			background: none;
+			margin: auto 0;
+			background: rgba(0, 0, 0, 0.2);
+		}
+
+		.carousel .carousel-control i {
+			font-size: 30px;
+			position: absolute;
+			top: 50%;
+			display: inline-block;
+			margin: -16px 0 0 0;
+			z-index: 5;
+			left: 0;
+			right: 0;
+			color: rgba(0, 0, 0, 0.8);
+			text-shadow: none;
+			font-weight: bold;
+		}
+
+		.carousel .item-price {
+			font-size: 13px;
+			padding: 2px 0;
+		}
+
+		.carousel .item-price strike {
+			color: #999;
+			margin-right: 5px;
+		}
+
+		.carousel .item-price span {
+			color: #86bd57;
+			font-size: 110%;
+		}
+
+		.carousel .carousel-control.left i {
+			margin-left: -3px;
+		}
+
+		.carousel .carousel-control.left i {
+			margin-right: -3px;
+		}
+
+		.carousel .carousel-indicators {
+			bottom: -50px;
+		}
+
+		.carousel-indicators li,
+		.carousel-indicators li.active {
+			width: 10px;
+			height: 10px;
+			margin: 4px;
+			border-radius: 50%;
+			border-color: transparent;
+		}
+
+		.carousel-indicators li {
+			background: rgba(0, 0, 0, 0.2);
+		}
+
+		.carousel-indicators li.active {
+			background: rgba(0, 0, 0, 0.6);
+		}
+
+		.star-rating li {
+			padding: 0;
+		}
+
+		.star-rating i {
+			font-size: 14px;
+			color: #ffc000;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 style="color:white;">Bunny Hops <b>Products</b></h2> <br />
+				<img src="Items/wallet.png" style="width:50px;height: 50px; margin-left: 550px;" />
+                <h2 style="color:gold">0</h2>
+                <a href="./upload.html" class="btn-lg btn-primary" id ="downloadAward" style="margin-left: 480px">Upload Award</a>
+				<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+					<!-- Carousel indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<!-- <li data-target="#myCarousel" data-slide-to="2"></li> -->
+					</ol>
+					<!-- Wrapper for carousel items -->
+					<div class="carousel-inner">
+						<div class="item carousel-item active">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Players/bunny2_ready.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white;">Purple Hops</h4>
+											<p class="item-price"><span>100.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="purplebunny" onclick="buystuff(50)">Buy</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/jetpack.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Jet Pack</h4>
+											<p class="item-price"><span>23</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="jetpack">Buy</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/spring_out.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Spring</h4>
+											<p class="item-price"><span>90.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="spring">Buy</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/wing_left.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Left Wing</h4>
+											<p class="item-price"><span>70.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="leftwing">Buy</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="item carousel-item">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/wing_right.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Right Wing</h4>
+											<p class="item-price"> <span>70.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="rightwing">Buy</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/powerup_bunny.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Bunny Power-up</h4>
+											<p class="item-price"> <span>15.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="powerup">Buy</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/lighting_yellow.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Pika Power-up</h4>
+											<p class="item-price"><span>20.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="pikalightning">Buy</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="thumb-wrapper">
+										<div class="img-box">
+											<img src="Items/flame_double.png" class="img-responsive img-fluid" alt="">
+										</div>
+										<div class="thumb-content">
+											<h4 style="color:white">Fire Blast</h4>
+											<p class="item-price"><span>20.00</span></p>
+											<div class="star-rating">
+												<ul class="list-inline">
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star"></i></li>
+													<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+												</ul>
+											</div>
+											<a href="#" class="btn btn-primary" id="fireblast">Buy</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- Carousel controls -->
+					<a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+						<i class="fa fa-angle-left"></i>
+					</a>
+					<a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+						<i class="fa fa-angle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+		
+		var web3 = window.web3;
+		// var web3 = new Web3();
+		web3.setProvider(new web3.providers.HttpProvider("http://localhost:7545"));	
+		
+		const contract = new web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_points",
+				"type": "uint256"
+			}
+		],
+		"name": "addPoints",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_points",
+				"type": "uint256"
+			}
+		],
+		"name": "deductpoints",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPoints",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+        contract.options = {
+                address: '0x2c78747d111585761D5169a279437be29033011a',
+                from: '0xA2493Ef1F688F32119a40981c69b25d56aAa2E2A',
+                gasPrice: '20000000000'
+        }
+		// const Web3 = require('web3');
+        // const web3 = new Web3("HTTP://127.0.0.1:7545");
+		// console.log(web3.currentProvider);
+// 		console.log(web3);
+// 		// console.log(web3.eth.contract);
+// 		const abi = [
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_points",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "addPoints",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_points",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "deductpoints",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "getPoints",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	}
+// ]
+// 		var sampleContract = web3.eth.contract(abi);
+// 		sampleContract.options = {
+//      from: '0xA2493Ef1F688F32119a40981c69b25d56aAa2E2A', 
+//      data: '6080604052600080556001805467ffffffffffffffff1916905534801561002557600080fd5b5060f3806100346000396000f30060806040526004361060525763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312fb1cbd811460575780631be6de1c14606e578063f4b7095b146083575b600080fd5b348015606257600080fd5b50606c60043560a7565b005b348015607957600080fd5b50606c60043560b2565b348015608e57600080fd5b50609560c1565b60408051918252519081900360200190f35b600080549091019055565b60008054919091036032019055565b600054905600a165627a7a723058200ba46829b38336b26531e84d7c09c5b3b5c47713221f3d43b02daec4b800628a0029', 
+//      gas: '4700000'
+//    }
+//    var sampleContractInstance = sampleContract.at("0x54b613207B462f0c5222314d656f994F6D8a3436");
+// var contract = new web3.eth.contract(
+// 	[
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_points",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "addPoints",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_points",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "deductpoints",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "getPoints",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	}
+// ],'0x54b613207B462f0c5222314d656f994F6D8a3436',
+//    {
+//      from: '0x54b613207B462f0c5222314d656f994F6D8a3436', 
+//      data: '6080604052600080556001805467ffffffffffffffff1916905534801561002557600080fd5b5060f3806100346000396000f30060806040526004361060525763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312fb1cbd811460575780631be6de1c14606e578063f4b7095b146083575b600080fd5b348015606257600080fd5b50606c60043560a7565b005b348015607957600080fd5b50606c60043560b2565b348015608e57600080fd5b50609560c1565b60408051918252519081900360200190f35b600080549091019055565b60008054919091036032019055565b600054905600a165627a7a723058200ba46829b38336b26531e84d7c09c5b3b5c47713221f3d43b02daec4b800628a0029', 
+//      gas: '4700000'
+//    })
+ console.log(contract);
+   
+        
+		function buystuff(points){
+			//const points = req.query.points;
+    		//console.log('Player sent:',points);
+
+    		contract.methods.addPoints(points).send({from: '0xA2493Ef1F688F32119a40981c69b25d56aAa2E2A'}).then(e => res.send('points added'));
+
+		}
+
+	</script>
+</body>
+
+</html>
